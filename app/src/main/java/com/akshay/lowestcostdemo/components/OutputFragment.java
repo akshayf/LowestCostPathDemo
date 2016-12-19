@@ -44,7 +44,7 @@ public class OutputFragment extends Fragment {
      * @param matrix 2*2 matrix
      * @param numRows rows in matrix
      * @param numCols columns in matrix
-     * @return int least cost
+     * @return OutputBin object of OutputBin class
     */
     public OutputBin calculatePath(int [][] matrix, int numRows, int numCols){
 
