@@ -75,10 +75,22 @@ public class OutputFragment extends Fragment {
 
                     int min[] = calculateMin(matrix, m, k, n, j);
 
-                    countTotal = countTotal + min[0];
+                    int total = countTotal + min[0];
+
                     k = min[1];
 
-                    outputBin.setPathSequence(outputBin.getPathSequence() + (k+1) +" ");
+                    String pathMaid;
+                    if(total <= 50){
+                        pathMaid = "YES";
+                        countTotal = total;
+                        outputBin.setPathMaid(pathMaid);
+                        outputBin.setPathSequence(outputBin.getPathSequence() + (k + 1) + " ");
+                    }else{
+                        pathMaid = "NO";
+                        outputBin.setPathMaid(pathMaid);
+                        outputBin.setTotalCost(countTotal);
+                        break;
+                    }
 
                 if(j == numCols -1){
                     outputBin.setTotalCost(countTotal);
@@ -100,14 +112,8 @@ public class OutputFragment extends Fragment {
             }
         }
 
-        String pathMaid = "YES";
-        if(outputBinList.get(index).getTotalCost() <= 50){
-            pathMaid = "YES";
-        }else{
-            pathMaid = "NO";
-        }
-
-        setOutput(pathMaid, outputBinList.get(index).getTotalCost(), outputBinList.get(index).getPathSequence());
+        setOutput(outputBinList.get(index).getPathMaid(), outputBinList.get(index).getTotalCost(),
+                outputBinList.get(index).getPathSequence());
 
         return outputBinList.get(index);
     }
