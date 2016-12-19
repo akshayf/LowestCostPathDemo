@@ -46,7 +46,7 @@ public class OutputFragment extends Fragment {
      * @param numCols columns in matrix
      * @return int least cost
     */
-    public int calculatePath(int [][] matrix, int numRows, int numCols){
+    public OutputBin calculatePath(int [][] matrix, int numRows, int numCols){
 
         List<OutputBin> outputBinList = new ArrayList<>();
         OutputBin outputBin;
@@ -109,7 +109,7 @@ public class OutputFragment extends Fragment {
 
         setOutput(pathMaid, outputBinList.get(index).getTotalCost(), outputBinList.get(index).getPathSequence());
 
-        return outputBinList.get(index).getTotalCost();
+        return outputBinList.get(index);
     }
 
     private int[] calculateMin(int [][] matrix, int m, int k, int n, int j){
@@ -131,7 +131,7 @@ public class OutputFragment extends Fragment {
             if (matrix[k][j] <= matrix[n][j]){
 
                 min[0] = matrix[k][j];
-                min[0] = k;
+                min[1] = k;
             }else{
                 min[0] = matrix[n][j];
                 min[1] = n;
@@ -143,15 +143,14 @@ public class OutputFragment extends Fragment {
 
     private void setOutput(String pathMaid, int totalCost, String pathSequence){
 
-        List<String> pathList = new ArrayList<>();
-        pathList.add(getResources().getString(R.string.path_maid));
-        pathList.add(pathMaid);
-        pathList.add(getResources().getString(R.string.total_cost));
-        pathList.add(String.valueOf(totalCost));
-        pathList.add(getResources().getString(R.string.path_sequence));
-        pathList.add(pathSequence);
-
         if(inflatedView != null){
+            List<String> pathList = new ArrayList<>();
+            pathList.add(getResources().getString(R.string.path_maid));
+            pathList.add(pathMaid);
+            pathList.add(getResources().getString(R.string.total_cost));
+            pathList.add(String.valueOf(totalCost));
+            pathList.add(getResources().getString(R.string.path_sequence));
+            pathList.add(pathSequence);
 
             GridView gridView = (GridView)inflatedView.findViewById(R.id.result_grid_view);
             gridView.setNumColumns(2);
