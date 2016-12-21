@@ -42,7 +42,6 @@ public class LowCostPathActivity extends AppCompatActivity {
             MatrixInputFragment matrixInputFragment = new MatrixInputFragment();
             matrixInputFragment.setArguments(bundle);
             fragmentTransaction.replace(R.id.fragment_container, matrixInputFragment);
-            fragmentTransaction.addToBackStack(null);
         }else if(fromFragment == LCPAppConstants.MATRIX_INPUT_FRAGMENT){
 
             ShowLCPFragment showLCPFragment = new ShowLCPFragment();
@@ -55,6 +54,7 @@ public class LowCostPathActivity extends AppCompatActivity {
             fragmentTransaction.replace(R.id.fragment_container, inputDimensionFragment);
         }
 
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 }
