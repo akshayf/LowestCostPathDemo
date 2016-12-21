@@ -1,14 +1,11 @@
 <resources>
-    <string name="app_name">Lowest Cost Demo</string>
+    <string name="app_name">Lowest Cost Path Demo</string>
     <string name="enter_rows">Enter the rows (1 to 10)</string>
     <string name="enter_cols">Enter the columns (5 to 100)</string>
     <string name="submit">Submit</string>
     <string name="error_rows">Please enter valid rows</string>
     <string name="error_cols">Please enter valid columns</string>
-
     <string name="submit_grid">Submit</string>
-    <string name="next_grid">Next</string>
-
     <string name="path_maid">Path Maid</string>
     <string name="total_cost">Total Cost</string>
     <string name="path_sequence">Path Sequence</string>

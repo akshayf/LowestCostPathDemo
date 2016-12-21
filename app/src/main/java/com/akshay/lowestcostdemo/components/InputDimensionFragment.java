@@ -9,16 +9,16 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.akshay.lowestcostdemo.R;
-import com.akshay.lowestcostdemo.utilities.AppConstants;
+import com.akshay.lowestcostdemo.utilities.LCPAppConstants;
 
-public class InputFragment extends Fragment {
+public class InputDimensionFragment extends Fragment {
 
     private View inflatedView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        inflatedView =  inflater.inflate(R.layout.fragment_input, container, false);
+        inflatedView =  inflater.inflate(R.layout.fragment_input_dimen, container, false);
 
         inflatedView.findViewById(R.id.submit_button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,9 +64,9 @@ public class InputFragment extends Fragment {
         } else {
 
             Bundle bundle = new Bundle();
-            bundle.putInt(AppConstants.NUMBER_OF_ROWS, numRows);
-            bundle.putInt(AppConstants.NUMBER_OF_COLUMNS, numCols);
-            ((MainActivity) getActivity()).switchFragment(AppConstants.INPUT_FRAGMENT, bundle);
+            bundle.putInt(LCPAppConstants.NUMBER_OF_ROWS, numRows);
+            bundle.putInt(LCPAppConstants.NUMBER_OF_COLUMNS, numCols);
+            ((LowCostPathActivity) getActivity()).switchFragment(LCPAppConstants.INPUT_DIMENSION_FRAGMENT, bundle);
         }
     }
 }

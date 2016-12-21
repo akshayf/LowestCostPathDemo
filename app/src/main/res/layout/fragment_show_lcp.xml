@@ -16,7 +16,7 @@
         android:id="@+id/result_grid_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:numColumns="auto_fit"
         android:gravity="center" />
 

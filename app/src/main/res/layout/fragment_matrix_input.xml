@@ -2,7 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp">
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp">
 
     <TextView
         android:id="@+id/text_header"
@@ -17,7 +20,7 @@
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="60dp"
         android:orientation="horizontal" />
 
     <EditText
@@ -34,10 +37,13 @@
 
     <Button
         android:id="@+id/submit_button"
-        android:layout_width="wrap_content"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
+        android:textAllCaps="false"
+        android:textStyle="bold"
         android:text="@string/submit_grid" />
 </RelativeLayout>

@@ -1,6 +1,6 @@
 package com.akshay.lowestcostdemo.utilities;
 
-public class OutputBin {
+public class UtilityBin {
 
     private int totalCost;
     private String pathSequence;
