@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.akshay.lowestcostdemo.R;
+import com.akshay.lowestcostdemo.utilities.InputDimensionValidator;
 import com.akshay.lowestcostdemo.utilities.LCPAppConstants;
 
 public class InputDimensionFragment extends Fragment {
@@ -44,29 +45,26 @@ public class InputDimensionFragment extends Fragment {
         int numRows = Integer.parseInt(rows);
         int numCols = Integer.parseInt(cols);
 
-        boolean cancel = false;
-        View focusView = null;
+        InputDimensionValidator inputValidator = new InputDimensionValidator();
 
-        if (TextUtils.isEmpty(rows) || numRows < 1 || numRows > 10) {
-            rowEditText.setError(getString(R.string.enter_rows));
-            focusView = rowEditText;
-            cancel = true;
-        }
-
-        if (TextUtils.isEmpty(cols) || numCols < 5 || numCols > 100) {
-            colEditText.setError(getString(R.string.error_cols));
-            focusView = colEditText;
-            cancel = true;
-        }
-
-        if (cancel) {
-            focusView.requestFocus();
-        } else {
-
+        if(TextUtils.isEmpty(rows)){
+            setErrorText(rowEditText, getString(R.string.error_rows));
+        }else if(TextUtils.isEmpty(cols)){
+            setErrorText(colEditText, getString(R.string.error_cols));
+        }else if(inputValidator.validateEnteredRows(numRows)){
+            setErrorText(rowEditText, getString(R.string.error_rows));
+        }else if(inputValidator.validateEnteredColumns(numCols)){
+            setErrorText(colEditText, getString(R.string.error_cols));
+        }else{
             Bundle bundle = new Bundle();
             bundle.putInt(LCPAppConstants.NUMBER_OF_ROWS, numRows);
             bundle.putInt(LCPAppConstants.NUMBER_OF_COLUMNS, numCols);
             ((LowCostPathActivity) getActivity()).switchFragment(LCPAppConstants.INPUT_DIMENSION_FRAGMENT, bundle);
         }
+    }
+
+    private void setErrorText(EditText editText, String message){
+        editText.setError(message);
+        editText.requestFocus();
     }
 }

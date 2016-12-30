@@ -16,6 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+/*
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class FindLowCostPathTest extends ActivityInstrumentationTestCase2<LowCostPathActivity>{
@@ -83,4 +84,4 @@ public class FindLowCostPathTest extends ActivityInstrumentationTestCase2<LowCos
 
         showLCPFragment = null;
     }
-}
+}*/

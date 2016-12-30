@@ -20,7 +20,7 @@ public class MatrixInputFragment extends Fragment {
 
     private View inflatedView;
     private final int MAX_VALUE = 8;
-    private boolean COLS_FLAG = true;
+    private boolean GRID_FLAG = true;
     private int totalNumRows;
     private int totalNumCols;
     private GridLayout inputGridLayout;
@@ -43,7 +43,7 @@ public class MatrixInputFragment extends Fragment {
 
             inputMatrix = new int[totalNumRows][totalNumCols];
 
-            initialiseLayout();
+            initializeLayout();
 
             inflatedView.findViewById(R.id.submit_button).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -57,7 +57,7 @@ public class MatrixInputFragment extends Fragment {
         return inflatedView;
     }
 
-    private void initialiseLayout() {
+    private void initializeLayout() {
 
         if (totalNumRows <= MAX_VALUE && totalNumCols <= MAX_VALUE) {
 
@@ -68,20 +68,20 @@ public class MatrixInputFragment extends Fragment {
             inflatedView.findViewById(R.id.input_grid_layout).setVisibility(View.VISIBLE);
             inflatedView.findViewById(R.id.input_edit_text).setVisibility(View.GONE);
 
-            addEditTextInGrid();
+            addEditTextInGridLayout();
 
-            COLS_FLAG = true;
+            GRID_FLAG = true;
 
         } else {
 
             inflatedView.findViewById(R.id.input_grid_layout).setVisibility(View.GONE);
             inflatedView.findViewById(R.id.input_edit_text).setVisibility(View.VISIBLE);
 
-            COLS_FLAG = false;
+            GRID_FLAG = false;
         }
     }
 
-    private void addEditTextInGrid() {
+    private void addEditTextInGridLayout() {
 
         LayoutInflater inflater;
         EditText view;
@@ -99,7 +99,7 @@ public class MatrixInputFragment extends Fragment {
 
         boolean errorFlag;
 
-        if (COLS_FLAG) {
+        if (GRID_FLAG) {
             errorFlag = getMatrixValuesFromGrid();
         } else {
             errorFlag = getMatrixValuesFromEditText();
