@@ -14,7 +14,6 @@ import com.akshay.lowestcostdemo.components.DisplayLCPFragment;
  * FragmentTransactionUtility use to handle fragment transactions and
  * sharing data between them
  *
- * @author  Akshay Faye
  * @version 1.0
  */
 public class FragmentTransactionUtility {

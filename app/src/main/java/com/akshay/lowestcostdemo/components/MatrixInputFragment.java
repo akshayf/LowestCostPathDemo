@@ -24,7 +24,6 @@ import java.util.StringTokenizer;
  * If it get more rows and columns then it will display edit text where
  * you can enter comma separated values.
  *
- * @author  Akshay Faye
  * @version 1.0
  */
 public class MatrixInputFragment extends Fragment implements View.OnClickListener{
@@ -62,7 +61,7 @@ public class MatrixInputFragment extends Fragment implements View.OnClickListene
             totalNumCols = bundle.getInt(LCPAppConstants.NUMBER_OF_COLUMNS);
 
             ((TextView) inflatedView.findViewById(R.id.text_header))
-                    .setText(getResources().getString(R.string.enter_values) + " " + totalNumRows + "*" + totalNumCols + getResources().getString(R.string.matrix));
+                    .setText(getResources().getString(R.string.enter_values) + " " + totalNumRows + "*" + totalNumCols + " "+getResources().getString(R.string.matrix));
 
             inputMatrix = new int[totalNumRows][totalNumCols];
 
@@ -91,6 +90,9 @@ public class MatrixInputFragment extends Fragment implements View.OnClickListene
         }
     }
 
+    /**
+     * Add edit text in grid layout for all matrix cells
+     */
     private void addEditTextInGridLayout() {
 
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -104,6 +106,9 @@ public class MatrixInputFragment extends Fragment implements View.OnClickListene
         }
     }
 
+    /**
+     * Validate values getting from matrix or editText are valid to process
+     */
     private void validateDetails() {
 
         boolean errorFlag;
@@ -120,7 +125,7 @@ public class MatrixInputFragment extends Fragment implements View.OnClickListene
     }
 
     /**
-     * Get all values from Grid view
+     * Get all values from Grid view (matrix cells)
      * @return errorFlag detect error while getting values
      */
     private boolean getMatrixValuesFromGrid() {
@@ -227,6 +232,9 @@ public class MatrixInputFragment extends Fragment implements View.OnClickListene
         }
     }
 
+    /**
+     * Send matrix values to DisplayLCPFragment for processing
+     */
     private void sendMatrixValues() {
 
         Bundle bundle = new Bundle();

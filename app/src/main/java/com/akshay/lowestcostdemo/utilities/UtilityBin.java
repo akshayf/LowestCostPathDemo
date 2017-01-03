@@ -1,5 +1,10 @@
 package com.akshay.lowestcostdemo.utilities;
 
+/**
+ * UtilityBin class to store values for lowest cost path
+ *
+ * @version 1.0
+ */
 public class UtilityBin {
 
     private int totalCost;

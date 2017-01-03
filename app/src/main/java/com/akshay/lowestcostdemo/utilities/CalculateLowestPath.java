@@ -13,7 +13,6 @@ import javax.inject.Inject;
  * CalculateLowestPath class to find low cost path
  * Calculates the TotalCost, PathSequence and PathMaid for the given matrix.
  *
- * @author  Akshay Faye
  * @version 1.0
  */
 public class CalculateLowestPath {
@@ -21,6 +20,7 @@ public class CalculateLowestPath {
     private int [][] matrix;
     private int numRows;
     private int numCols;
+    private final int MAX_COST = 50;
 
     @Inject
     UtilityBin utilityBin, utilityBinTemp;
@@ -38,6 +38,7 @@ public class CalculateLowestPath {
      */
     public UtilityBin findLowestCostPath() {
 
+        //ArrayList to store all formed utility bin objects
         List<UtilityBin> utilityBinList = new ArrayList<>();
 
         for(int row=0; row<numRows; row++){
@@ -51,6 +52,7 @@ public class CalculateLowestPath {
             utilityBinList.add(row, utilityBin);
         }
 
+        //the revers loop for columns i.e. right to left approach
         for(int col= numCols-2; col>=0; col--){
 
             //Temporary list to store values for single column
@@ -96,6 +98,7 @@ public class CalculateLowestPath {
 
         int index = 0;
 
+        //Calculates lowest cost UtilityBin object
         for(int i = 1 ; i< utilityBinList.size(); i++){
 
             int val1 = utilityBinList.get(index).getTotalCost();
@@ -109,13 +112,21 @@ public class CalculateLowestPath {
         return checkValidPath(utilityBinList.get(index), matrix, numCols);
     }
 
+    /**
+     * To check the path is valid
+     * i.e. to validate totalCost is less than 50 otherwise no path get maid
+     * @param utilityBin object of UtilityBin class
+     * @param matrix the matrix values
+     * @param numCols number of columns
+     * @return UtilityBin modified object contains path maid parameter
+     */
     private UtilityBin checkValidPath(UtilityBin utilityBin, int [][] matrix, int numCols){
 
         int totalCost = utilityBin.getTotalCost();
         String pathSequence = utilityBin.getPathSequence();
         String pathMaid = LCPAppConstants.PATH_MAID_YES;
 
-        if (totalCost > 50) {
+        if (totalCost > MAX_COST) {
 
             try {
                 pathMaid = LCPAppConstants.PATH_MAID_NO;
@@ -132,7 +143,7 @@ public class CalculateLowestPath {
 
                     tempCost = cost + matrix[row - 1][col];
 
-                    if (tempCost > 50) {
+                    if (tempCost > MAX_COST) {
 
                         totalCost = cost;
                         pathSequence = tempPath;
@@ -162,7 +173,7 @@ public class CalculateLowestPath {
      * @param prevRow previous row element
      * @param row current row element
      * @param nextRow next row element
-     * @return int[] returns minimum cost and path value
+     * @return int[] returns minimum cost and path sequence
      */
     private int[] calculateMin(List<UtilityBin> utilityBinList, int prevRow, int row, int nextRow){
 

@@ -10,7 +10,6 @@ import com.akshay.lowestcostdemo.utilities.LCPAppConstants;
 /**
  * LowCostPathActivity main activity to handle all the fragments
  *
- * @author  Akshay Faye
  * @version 1.0
  */
 public class LowCostPathActivity extends AppCompatActivity {

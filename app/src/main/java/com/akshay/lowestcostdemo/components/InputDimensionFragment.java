@@ -19,9 +19,7 @@ import javax.inject.Inject;
 
 /**
  * InputDimensionFragment use to handle rows and column input
- * It handles rows from 1 to 10 and columns from 5 to 100
  *
- * @author  Akshay Faye
  * @version 1.0
  */
 public class InputDimensionFragment extends Fragment implements View.OnClickListener{
@@ -47,6 +45,10 @@ public class InputDimensionFragment extends Fragment implements View.OnClickList
         inflatedView.findViewById(R.id.submit_button).setOnClickListener(this);
     }
 
+    /**
+     * Validate the given input rows and columns.
+     * Validate limit of rows from 1 to 10 and columns from 5 to 100
+     */
     private void validateInput() {
 
         EditText rowEditText = (EditText)inflatedView.findViewById(R.id.rows_edit_text);
@@ -73,11 +75,7 @@ public class InputDimensionFragment extends Fragment implements View.OnClickList
         }else if(inputValidator.validateEnteredColumns(numCols)){
             setErrorText(colEditText, getString(R.string.error_cols));
         }else{
-            Bundle bundle = new Bundle();
-            bundle.putInt(LCPAppConstants.NUMBER_OF_ROWS, numRows);
-            bundle.putInt(LCPAppConstants.NUMBER_OF_COLUMNS, numCols);
-            FragmentTransactionUtility fragmentUtility = new FragmentTransactionUtility(getActivity());
-            fragmentUtility.switchFragment(MatrixInputFragment.class.getSimpleName(), bundle);
+            sendInputDimensions(numRows, numCols);
         }
     }
 
@@ -94,5 +92,19 @@ public class InputDimensionFragment extends Fragment implements View.OnClickList
     private void setErrorText(EditText editText, String message){
         editText.setError(message);
         editText.requestFocus();
+    }
+
+    /**
+     * Send input matrix dimensions to MatrixInputFragment
+     * @param numRows user entered rows
+     * @param numCols user entered columns
+     */
+    private void sendInputDimensions(int numRows, int numCols) {
+
+        Bundle bundle = new Bundle();
+        bundle.putInt(LCPAppConstants.NUMBER_OF_ROWS, numRows);
+        bundle.putInt(LCPAppConstants.NUMBER_OF_COLUMNS, numCols);
+        FragmentTransactionUtility fragmentUtility = new FragmentTransactionUtility(getActivity());
+        fragmentUtility.switchFragment(MatrixInputFragment.class.getSimpleName(), bundle);
     }
 }

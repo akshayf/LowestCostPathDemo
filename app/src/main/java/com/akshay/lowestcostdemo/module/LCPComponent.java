@@ -11,7 +11,6 @@ import dagger.Component;
 /**
  * LCPComponent is used to implement Dagger library
  *
- * @author  Akshay Faye
  * @version 1.0
  */
 @Singleton
