@@ -9,6 +9,13 @@ import java.util.StringTokenizer;
 
 import javax.inject.Inject;
 
+/**
+ * CalculateLowestPath class to find low cost path
+ * Calculates the TotalCost, PathSequence and PathMaid for the given matrix.
+ *
+ * @author  Akshay Faye
+ * @version 1.0
+ */
 public class CalculateLowestPath {
 
     private int [][] matrix;
@@ -33,49 +40,49 @@ public class CalculateLowestPath {
 
         List<UtilityBin> utilityBinList = new ArrayList<>();
 
-        for(int i=0; i<numRows; i++){
+        for(int row=0; row<numRows; row++){
 
             LCPComponent lcpComponent = DaggerLCPComponent.builder().build();
             utilityBin = lcpComponent.provideUtilityBin();
 
-            utilityBin.setTotalCost(matrix[i][numCols - 1]);
+            utilityBin.setTotalCost(matrix[row][numCols - 1]);
             utilityBin.setPathSequence("");
 
-            utilityBinList.add(i, utilityBin);
+            utilityBinList.add(row, utilityBin);
         }
 
-        for(int j= numCols-2; j>=0; j--){
+        for(int col= numCols-2; col>=0; col--){
 
             //Temporary list to store values for single column
             List<UtilityBin> utilityBinListTemp = new ArrayList<>();
 
-            for(int i=0; i<numRows; i++){
+            for(int row=0; row<numRows; row++){
 
-                int m, n;
+                int prevRow, nextRow;
 
-                if (i == 0) {
-                    m = numRows - 1;
+                if (row == 0) {
+                    prevRow = numRows - 1;
                 } else {
-                    m = i - 1;
+                    prevRow = row - 1;
                 }
 
-                if (i == numRows - 1) {
-                    n = 0;
+                if (row == numRows - 1) {
+                    nextRow = 0;
                 } else {
-                    n = i + 1;
+                    nextRow = row + 1;
                 }
 
-                int [] minArray = calculateMin(utilityBinList, m, i, n);
+                int [] minArray = calculateMin(utilityBinList, prevRow, row, nextRow);
 
                 LCPComponent lcpComponent = DaggerLCPComponent.builder().build();
                 utilityBinTemp = lcpComponent.provideUtilityBin();
-                int cost = matrix[i][j] + minArray[0];
+                int cost = matrix[row][col] + minArray[0];
                 utilityBinTemp.setTotalCost(cost);
 
                 String pathSequence = "";
 
-                if(j==0){
-                    pathSequence = (i + 1)+" ";
+                if(col==0){
+                    pathSequence = (row + 1)+" ";
                 }
 
                 pathSequence = pathSequence + (minArray[1] + 1)+" "+ utilityBinList.get(minArray[1]).getPathSequence();
@@ -89,7 +96,7 @@ public class CalculateLowestPath {
 
         int index = 0;
 
-        for(int i=1 ; i< utilityBinList.size(); i++){
+        for(int i = 1 ; i< utilityBinList.size(); i++){
 
             int val1 = utilityBinList.get(index).getTotalCost();
             int val2 =  utilityBinList.get(i).getTotalCost();
@@ -118,12 +125,12 @@ public class CalculateLowestPath {
 
                 StringTokenizer st = new StringTokenizer(pathSequence, " ");
 
-                for (int j = 0; j < numCols; j++) {
+                for (int col = 0; col < numCols; col++) {
 
                     String iCount = st.nextToken();
-                    int i = Integer.parseInt(iCount);
+                    int row = Integer.parseInt(iCount);
 
-                    tempCost = cost + matrix[i - 1][j];
+                    tempCost = cost + matrix[row - 1][col];
 
                     if (tempCost > 50) {
 
@@ -152,37 +159,37 @@ public class CalculateLowestPath {
     /**
      * Calculates minimum value from given integer values
      * @param utilityBinList List of utilityBin objects
-     * @param m first integers
-     * @param i second integer
-     * @param n third integer
+     * @param prevRow previous row element
+     * @param row current row element
+     * @param nextRow next row element
      * @return int[] returns minimum cost and path value
      */
-    private int[] calculateMin(List<UtilityBin> utilityBinList, int m, int i, int n){
+    private int[] calculateMin(List<UtilityBin> utilityBinList, int prevRow, int row, int nextRow){
 
-        int[] min = new int[2];
+        int[] minCost = new int[2];
 
-        if (utilityBinList.get(m).getTotalCost() <= utilityBinList.get(i).getTotalCost()){
+        if (utilityBinList.get(prevRow).getTotalCost() <= utilityBinList.get(row).getTotalCost()){
 
-            if (utilityBinList.get(m).getTotalCost() <= utilityBinList.get(n).getTotalCost()){
+            if (utilityBinList.get(prevRow).getTotalCost() <= utilityBinList.get(nextRow).getTotalCost()){
 
-                min[0] = utilityBinList.get(m).getTotalCost();
-                min[1] = m;
+                minCost[0] = utilityBinList.get(prevRow).getTotalCost();
+                minCost[1] = prevRow;
             }else{
-                min[0] = utilityBinList.get(n).getTotalCost();
-                min[1] = n;
+                minCost[0] = utilityBinList.get(nextRow).getTotalCost();
+                minCost[1] = nextRow;
             }
         } else {
 
-            if (utilityBinList.get(i).getTotalCost() <= utilityBinList.get(n).getTotalCost()){
+            if (utilityBinList.get(row).getTotalCost() <= utilityBinList.get(nextRow).getTotalCost()){
 
-                min[0] = utilityBinList.get(i).getTotalCost();
-                min[1] = i;
+                minCost[0] = utilityBinList.get(row).getTotalCost();
+                minCost[1] = row;
             }else{
-                min[0] = utilityBinList.get(n).getTotalCost();
-                min[1] = n;
+                minCost[0] = utilityBinList.get(nextRow).getTotalCost();
+                minCost[1] = nextRow;
             }
         }
 
-        return min;
+        return minCost;
     }
 }

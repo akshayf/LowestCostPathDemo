@@ -29,7 +29,7 @@ public class InputDimensionFragmentTest {
     public void InputDimensionFragmentIsNull() throws Exception {
         InputDimensionFragment fragment = new InputDimensionFragment();
 
-        startFragment(LCPAppConstants.INPUT_DIMENSION_FRAGMENT);
+        startFragment(InputDimensionFragment.class.getSimpleName());
         assertNotNull(fragment);
     }
 

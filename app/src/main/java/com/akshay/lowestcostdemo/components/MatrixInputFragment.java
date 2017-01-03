@@ -18,6 +18,15 @@ import com.akshay.lowestcostdemo.utilities.LCPAppConstants;
 
 import java.util.StringTokenizer;
 
+/**
+ * MatrixInputFragment use to handle matrix input
+ * Here we set the limit for matrix input to 8 rows and 8 columns.
+ * If it get more rows and columns then it will display edit text where
+ * you can enter comma separated values.
+ *
+ * @author  Akshay Faye
+ * @version 1.0
+ */
 public class MatrixInputFragment extends Fragment implements View.OnClickListener{
 
     private View inflatedView;
@@ -29,7 +38,7 @@ public class MatrixInputFragment extends Fragment implements View.OnClickListene
     private int[][] inputMatrix;
 
     /**
-     * Default constructor so that it should get recreated if gets destroyed by os in memory issue.
+     * Default constructor so that fragment should get recreated if gets destroyed by os in memory issue.
      */
     public MatrixInputFragment() {}
 
@@ -118,19 +127,19 @@ public class MatrixInputFragment extends Fragment implements View.OnClickListene
 
         boolean errorFlag = false;
 
-        int kCount = 0;
+        int cellCount = 0;
 
-        for (int i = 0; i < totalNumRows; i++) {
+        for (int row = 0; row < totalNumRows; row++) {
 
-            for (int j = 0; j < totalNumCols; j++) {
+            for (int col = 0; col < totalNumCols; col++) {
 
-                String text = ((EditText) inflatedView.findViewWithTag(kCount)).getText().toString();
-                kCount++;
+                String matrixCell = ((EditText) inflatedView.findViewWithTag(cellCount)).getText().toString();
+                cellCount++;
 
-                if(!text.equalsIgnoreCase("")){
+                if(!matrixCell.equalsIgnoreCase("")){
 
                     try {
-                        inputMatrix[i][j] = Integer.parseInt(text);
+                        inputMatrix[row][col] = Integer.parseInt(matrixCell);
 
                     }catch (Exception e){
 
@@ -173,16 +182,16 @@ public class MatrixInputFragment extends Fragment implements View.OnClickListene
             try{
                 StringTokenizer st = new StringTokenizer(matrixText, ",");
 
-                for (int i = 0; i < totalNumRows; i++) {
+                for (int row = 0; row < totalNumRows; row++) {
 
-                    for (int j = 0; j < totalNumCols; j++) {
+                    for (int col = 0; col < totalNumCols; col++) {
 
                         if (st.hasMoreTokens()) {
 
                             String text = st.nextToken();
 
                             try {
-                                inputMatrix[i][j] = Integer.parseInt(text);
+                                inputMatrix[row][col] = Integer.parseInt(text);
                             } catch (Exception e) {
                                 errorFlag = true;
                                 e.printStackTrace();
@@ -225,6 +234,6 @@ public class MatrixInputFragment extends Fragment implements View.OnClickListene
         bundle.putInt(LCPAppConstants.NUMBER_OF_ROWS, totalNumRows);
         bundle.putInt(LCPAppConstants.NUMBER_OF_COLUMNS, totalNumCols);
         FragmentTransactionUtility fragmentUtility = new FragmentTransactionUtility(getActivity());
-        fragmentUtility.switchFragment(LCPAppConstants.SHOW_LCP_FRAGMENT, bundle);
+        fragmentUtility.switchFragment(DisplayLCPFragment.class.getSimpleName(), bundle);
     }
 }

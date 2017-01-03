@@ -20,12 +20,19 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class ShowLCPFragment extends Fragment {
+/**
+ * DisplayLCPFragment display the result after calculating the lowest cost path
+ * Calculate and display the TotalCost, PathSequence and PathMaid for the given matrix.
+ *
+ * @author  Akshay Faye
+ * @version 1.0
+ */
+public class DisplayLCPFragment extends Fragment {
 
     @Inject CalculateLowestPath calculateLP;
     private View inflatedView;
 
-    public ShowLCPFragment() {}
+    public DisplayLCPFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

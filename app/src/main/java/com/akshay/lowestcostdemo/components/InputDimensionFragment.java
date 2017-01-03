@@ -17,6 +17,13 @@ import com.akshay.lowestcostdemo.utilities.LCPAppConstants;
 
 import javax.inject.Inject;
 
+/**
+ * InputDimensionFragment use to handle rows and column input
+ * It handles rows from 1 to 10 and columns from 5 to 100
+ *
+ * @author  Akshay Faye
+ * @version 1.0
+ */
 public class InputDimensionFragment extends Fragment implements View.OnClickListener{
 
     @Inject
@@ -70,7 +77,7 @@ public class InputDimensionFragment extends Fragment implements View.OnClickList
             bundle.putInt(LCPAppConstants.NUMBER_OF_ROWS, numRows);
             bundle.putInt(LCPAppConstants.NUMBER_OF_COLUMNS, numCols);
             FragmentTransactionUtility fragmentUtility = new FragmentTransactionUtility(getActivity());
-            fragmentUtility.switchFragment(LCPAppConstants.MATRIX_INPUT_FRAGMENT, bundle);
+            fragmentUtility.switchFragment(MatrixInputFragment.class.getSimpleName(), bundle);
         }
     }
 

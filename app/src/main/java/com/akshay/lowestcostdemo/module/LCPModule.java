@@ -8,6 +8,12 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
+/**
+ * LCPModule is used to implement Dagger library
+ *
+ * @author  Akshay Faye
+ * @version 1.0
+ */
 @Module
 public class LCPModule {
 

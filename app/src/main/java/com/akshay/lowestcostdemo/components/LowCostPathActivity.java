@@ -7,6 +7,12 @@ import com.akshay.lowestcostdemo.R;
 import com.akshay.lowestcostdemo.utilities.FragmentTransactionUtility;
 import com.akshay.lowestcostdemo.utilities.LCPAppConstants;
 
+/**
+ * LowCostPathActivity main activity to handle all the fragments
+ *
+ * @author  Akshay Faye
+ * @version 1.0
+ */
 public class LowCostPathActivity extends AppCompatActivity {
 
     @Override
@@ -15,6 +21,6 @@ public class LowCostPathActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lcp);
 
         FragmentTransactionUtility fragmentUtility = new FragmentTransactionUtility(this);
-        fragmentUtility.switchFragment(LCPAppConstants.INPUT_DIMENSION_FRAGMENT, null);
+        fragmentUtility.switchFragment(InputDimensionFragment.class.getSimpleName(), null);
     }
 }

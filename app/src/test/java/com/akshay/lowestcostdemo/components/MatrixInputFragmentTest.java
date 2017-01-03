@@ -29,7 +29,7 @@ public class MatrixInputFragmentTest {
     public void MatrixInputFragmentIsNull() throws Exception {
         MatrixInputFragment fragment = new MatrixInputFragment();
 
-        startFragment(LCPAppConstants.MATRIX_INPUT_FRAGMENT);
+        startFragment(MatrixInputFragment.class.getSimpleName());
         assertNotNull(fragment);
     }
 

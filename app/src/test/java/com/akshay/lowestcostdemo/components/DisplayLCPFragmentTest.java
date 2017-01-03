@@ -2,7 +2,6 @@ package com.akshay.lowestcostdemo.components;
 
 import com.akshay.lowestcostdemo.BuildConfig;
 import com.akshay.lowestcostdemo.utilities.FragmentTransactionUtility;
-import com.akshay.lowestcostdemo.utilities.LCPAppConstants;
 
 import org.junit.After;
 import org.junit.Before;
@@ -16,7 +15,7 @@ import static org.junit.Assert.*;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21)
-public class ShowLCPFragmentTest {
+public class DisplayLCPFragmentTest {
 
     private LowCostPathActivity lcpActivity;
 
@@ -27,9 +26,9 @@ public class ShowLCPFragmentTest {
 
     @Test
     public void ShowLCPFragmentIsNull() throws Exception {
-        ShowLCPFragment fragment = new ShowLCPFragment();
+        DisplayLCPFragment fragment = new DisplayLCPFragment();
 
-        startFragment(LCPAppConstants.SHOW_LCP_FRAGMENT);
+        startFragment(DisplayLCPFragment.class.getSimpleName());
         assertNotNull(fragment);
     }
 

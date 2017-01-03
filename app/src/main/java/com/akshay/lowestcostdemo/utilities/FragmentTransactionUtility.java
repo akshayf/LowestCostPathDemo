@@ -4,13 +4,19 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.akshay.lowestcostdemo.R;
 import com.akshay.lowestcostdemo.components.InputDimensionFragment;
 import com.akshay.lowestcostdemo.components.MatrixInputFragment;
-import com.akshay.lowestcostdemo.components.ShowLCPFragment;
+import com.akshay.lowestcostdemo.components.DisplayLCPFragment;
 
+/**
+ * FragmentTransactionUtility use to handle fragment transactions and
+ * sharing data between them
+ *
+ * @author  Akshay Faye
+ * @version 1.0
+ */
 public class FragmentTransactionUtility {
 
     private Activity lcpActivity;
@@ -30,7 +36,7 @@ public class FragmentTransactionUtility {
         FragmentManager fragmentManager = lcpActivity.getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        if(fragmentTag.equals(LCPAppConstants.MATRIX_INPUT_FRAGMENT)){
+        if(fragmentTag.equals(MatrixInputFragment.class.getSimpleName())){
 
             MatrixInputFragment matrixInputFragment = (MatrixInputFragment)fragmentManager.findFragmentByTag(fragmentTag);
 
@@ -40,15 +46,15 @@ public class FragmentTransactionUtility {
             matrixInputFragment.setArguments(bundle);
             fragmentTransaction.replace(R.id.fragment_container, matrixInputFragment, fragmentTag);
 
-        }else if(fragmentTag.equals(LCPAppConstants.SHOW_LCP_FRAGMENT)){
+        }else if(fragmentTag.equals(DisplayLCPFragment.class.getSimpleName())){
 
-            ShowLCPFragment showLCPFragment = (ShowLCPFragment)fragmentManager.findFragmentByTag(fragmentTag);
+            DisplayLCPFragment displayLCPFragment = (DisplayLCPFragment)fragmentManager.findFragmentByTag(fragmentTag);
 
-            if(showLCPFragment == null)
-                showLCPFragment = new ShowLCPFragment();
+            if(displayLCPFragment == null)
+                displayLCPFragment = new DisplayLCPFragment();
 
-            showLCPFragment.setArguments(bundle);
-            fragmentTransaction.replace(R.id.fragment_container, showLCPFragment, fragmentTag);
+            displayLCPFragment.setArguments(bundle);
+            fragmentTransaction.replace(R.id.fragment_container, displayLCPFragment, fragmentTag);
 
         }else {
 
