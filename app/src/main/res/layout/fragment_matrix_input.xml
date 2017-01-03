@@ -2,37 +2,39 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="15dp"
-    android:layout_marginRight="15dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp">
+    android:layout_marginBottom="@dimen/common_view_margin"
+    android:layout_marginLeft="@dimen/matrix_parent_layout_margin"
+    android:layout_marginRight="@dimen/matrix_parent_layout_margin"
+    android:layout_marginTop="@dimen/common_view_margin">
 
     <TextView
         android:id="@+id/text_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:textSize="20sp" />
+        android:textSize="@dimen/header_text_size" />
 
     <GridLayout
         android:id="@+id/input_grid_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginBottom="@dimen/common_view_margin"
+        android:layout_marginTop="@dimen/matrix_grid_margin"
         android:orientation="horizontal" />
 
     <EditText
         android:id="@+id/input_edit_text"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:ems="20"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="@dimen/common_view_margin"
+        android:layout_marginTop="@dimen/common_view_margin"
+        android:gravity="top|left"
         android:hint="@string/edit_hint"
-        android:inputType="text"
+        android:inputType="textMultiLine"
+        android:maxLines="4"
+        android:minLines="3"
         android:visibility="gone" />
 
     <Button
@@ -42,8 +44,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="@dimen/common_view_margin"
+        android:text="@string/submit_grid"
         android:textAllCaps="false"
-        android:textStyle="bold"
-        android:text="@string/submit_grid" />
+        android:textStyle="bold" />
 </RelativeLayout>

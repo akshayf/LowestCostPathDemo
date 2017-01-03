@@ -1,18 +1,25 @@
 package com.akshay.lowestcostdemo.utilities;
 
+import com.akshay.lowestcostdemo.module.DaggerLCPComponent;
+import com.akshay.lowestcostdemo.module.LCPComponent;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.inject.Inject;
+
 public class InputDimensionValidatorTest {
 
-    private InputDimensionValidator inputValidator;
+    @Inject
+    InputDimensionValidator inputValidator;
 
     @Before
     public void setUp() throws Exception {
 
-        inputValidator = new InputDimensionValidator();
+        LCPComponent lcpComponent = DaggerLCPComponent.builder().build();
+        inputValidator = lcpComponent.provideInputDimen();
     }
 
     @Test

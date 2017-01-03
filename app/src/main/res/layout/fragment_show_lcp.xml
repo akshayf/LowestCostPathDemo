@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:padding="10dp"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/common_view_margin">
 
     <TextView
         android:id="@+id/text_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/path_details"
         android:layout_gravity="center_horizontal"
-        android:textSize="20sp" />
+        android:text="@string/path_details"
+        android:textSize="@dimen/header_text_size" />
 
     <GridView
         android:id="@+id/result_grid_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
-        android:numColumns="auto_fit"
-        android:gravity="center" />
+        android:layout_marginTop="@dimen/show_lcp_grid_margin"
+        android:gravity="center"
+        android:numColumns="auto_fit" />
 
 </LinearLayout>

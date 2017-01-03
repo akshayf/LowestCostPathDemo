@@ -7,21 +7,37 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+
 import com.akshay.lowestcostdemo.R;
+import com.akshay.lowestcostdemo.module.DaggerLCPComponent;
+import com.akshay.lowestcostdemo.module.LCPComponent;
 import com.akshay.lowestcostdemo.utilities.CalculateLowestPath;
 import com.akshay.lowestcostdemo.utilities.LCPAppConstants;
 import com.akshay.lowestcostdemo.utilities.UtilityBin;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class ShowLCPFragment extends Fragment {
 
+    @Inject CalculateLowestPath calculateLP;
     private View inflatedView;
+
+    public ShowLCPFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        inflatedView =  inflater.inflate(R.layout.fragment_show_lcp, container, false);
+        inflatedView = inflater.inflate(R.layout.fragment_show_lcp, container, false);
+
+        initializeLayout();
+
+        return inflatedView;
+    }
+
+    private void initializeLayout(){
 
         Bundle bundle = getArguments();
 
@@ -31,13 +47,13 @@ public class ShowLCPFragment extends Fragment {
             int numRows = bundle.getInt(LCPAppConstants.NUMBER_OF_ROWS);
             int numCols = bundle.getInt(LCPAppConstants.NUMBER_OF_COLUMNS);
 
-            CalculateLowestPath calculateLP = new CalculateLowestPath();
+            LCPComponent lcpComponent = DaggerLCPComponent.builder().build();
+            calculateLP = lcpComponent.provideCalculateLP();
+
             calculateLP.setMatrixDetails(inputMatrix, numRows, numCols);
             UtilityBin utilityBin = calculateLP.findLowestCostPath();
             showPathDetails(utilityBin);
         }
-
-        return inflatedView;
     }
 
     private void showPathDetails(UtilityBin utilityBin){

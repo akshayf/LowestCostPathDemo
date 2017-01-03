@@ -1,18 +1,36 @@
 package com.akshay.lowestcostdemo.utilities;
 
+import com.akshay.lowestcostdemo.BuildConfig;
+import com.akshay.lowestcostdemo.components.LowCostPathActivity;
+import com.akshay.lowestcostdemo.module.DaggerLCPComponent;
+import com.akshay.lowestcostdemo.module.LCPComponent;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
+import javax.inject.Inject;
+
+@RunWith(RobolectricTestRunner.class)
+@Config(constants = BuildConfig.class, sdk = 21)
 public class CalculateLowestPathTest {
 
-    private CalculateLowestPath calculateLP;
+    @Inject
+    CalculateLowestPath calculateLP;
+    private LowCostPathActivity lcpActivity;
 
     @Before
     public void setUp() throws Exception {
 
-        calculateLP = new CalculateLowestPath();
+        lcpActivity = Robolectric.setupActivity(LowCostPathActivity.class);
+
+        LCPComponent lcpComponent = DaggerLCPComponent.builder().build();
+        calculateLP = lcpComponent.provideCalculateLP();
     }
 
     @Test

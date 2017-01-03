@@ -1,14 +1,22 @@
 package com.akshay.lowestcostdemo.utilities;
 
+import com.akshay.lowestcostdemo.module.DaggerLCPComponent;
+import com.akshay.lowestcostdemo.module.LCPComponent;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
+
+import javax.inject.Inject;
 
 public class CalculateLowestPath {
 
     private int [][] matrix;
     private int numRows;
     private int numCols;
+
+    @Inject
+    UtilityBin utilityBin, utilityBinTemp;
 
     public void setMatrixDetails(int [][] matrix, int numRows, int numCols) {
 
@@ -24,11 +32,11 @@ public class CalculateLowestPath {
     public UtilityBin findLowestCostPath() {
 
         List<UtilityBin> utilityBinList = new ArrayList<>();
-        UtilityBin utilityBin;
 
         for(int i=0; i<numRows; i++){
 
-            utilityBin = new UtilityBin();
+            LCPComponent lcpComponent = DaggerLCPComponent.builder().build();
+            utilityBin = lcpComponent.provideUtilityBin();
 
             utilityBin.setTotalCost(matrix[i][numCols - 1]);
             utilityBin.setPathSequence("");
@@ -59,7 +67,8 @@ public class CalculateLowestPath {
 
                 int [] minArray = calculateMin(utilityBinList, m, i, n);
 
-                UtilityBin utilityBinTemp = new UtilityBin();
+                LCPComponent lcpComponent = DaggerLCPComponent.builder().build();
+                utilityBinTemp = lcpComponent.provideUtilityBin();
                 int cost = matrix[i][j] + minArray[0];
                 utilityBinTemp.setTotalCost(cost);
 

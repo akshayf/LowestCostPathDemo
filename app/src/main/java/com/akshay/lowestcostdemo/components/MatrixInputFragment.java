@@ -11,12 +11,14 @@ import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.akshay.lowestcostdemo.R;
+import com.akshay.lowestcostdemo.utilities.FragmentTransactionUtility;
 import com.akshay.lowestcostdemo.utilities.LCPAppConstants;
 
 import java.util.StringTokenizer;
 
-public class MatrixInputFragment extends Fragment {
+public class MatrixInputFragment extends Fragment implements View.OnClickListener{
 
     private View inflatedView;
     private final int MAX_VALUE = 8;
@@ -26,10 +28,22 @@ public class MatrixInputFragment extends Fragment {
     private GridLayout inputGridLayout;
     private int[][] inputMatrix;
 
+    /**
+     * Default constructor so that it should get recreated if gets destroyed by os in memory issue.
+     */
+    public MatrixInputFragment() {}
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         inflatedView = inflater.inflate(R.layout.fragment_matrix_input, container, false);
+
+        initializeLayout();
+
+        return inflatedView;
+    }
+
+    private void initializeLayout() {
 
         Bundle bundle = getArguments();
 
@@ -39,59 +53,45 @@ public class MatrixInputFragment extends Fragment {
             totalNumCols = bundle.getInt(LCPAppConstants.NUMBER_OF_COLUMNS);
 
             ((TextView) inflatedView.findViewById(R.id.text_header))
-                    .setText(getResources().getString(R.string.enter_values) +" "+ totalNumRows + "*" + totalNumCols + " Matrix");
+                    .setText(getResources().getString(R.string.enter_values) + " " + totalNumRows + "*" + totalNumCols + getResources().getString(R.string.matrix));
 
             inputMatrix = new int[totalNumRows][totalNumCols];
 
-            initializeLayout();
+            inflatedView.findViewById(R.id.submit_button).setOnClickListener(this);
 
-            inflatedView.findViewById(R.id.submit_button).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            if (totalNumRows <= MAX_VALUE && totalNumCols <= MAX_VALUE) {
 
-                    validateDetails();
-                }
-            });
+                inputGridLayout = (GridLayout) inflatedView.findViewById(R.id.input_grid_layout);
+                inputGridLayout.setRowCount(totalNumRows);
+                inputGridLayout.setColumnCount(totalNumCols);
 
-        }
-        return inflatedView;
-    }
+                inflatedView.findViewById(R.id.input_grid_layout).setVisibility(View.VISIBLE);
+                inflatedView.findViewById(R.id.input_edit_text).setVisibility(View.GONE);
 
-    private void initializeLayout() {
+                addEditTextInGridLayout();
 
-        if (totalNumRows <= MAX_VALUE && totalNumCols <= MAX_VALUE) {
+                GRID_FLAG = true;
 
-            inputGridLayout = (GridLayout) inflatedView.findViewById(R.id.input_grid_layout);
-            inputGridLayout.setRowCount(totalNumRows);
-            inputGridLayout.setColumnCount(totalNumCols);
+            } else {
 
-            inflatedView.findViewById(R.id.input_grid_layout).setVisibility(View.VISIBLE);
-            inflatedView.findViewById(R.id.input_edit_text).setVisibility(View.GONE);
+                inflatedView.findViewById(R.id.input_grid_layout).setVisibility(View.GONE);
+                inflatedView.findViewById(R.id.input_edit_text).setVisibility(View.VISIBLE);
 
-            addEditTextInGridLayout();
-
-            GRID_FLAG = true;
-
-        } else {
-
-            inflatedView.findViewById(R.id.input_grid_layout).setVisibility(View.GONE);
-            inflatedView.findViewById(R.id.input_edit_text).setVisibility(View.VISIBLE);
-
-            GRID_FLAG = false;
+                GRID_FLAG = false;
+            }
         }
     }
 
     private void addEditTextInGridLayout() {
 
-        LayoutInflater inflater;
-        EditText view;
+        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        EditText matrixChild;
 
         for (int i = 0; i < (totalNumRows * totalNumCols); i++) {
 
-            inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = (EditText)inflater.inflate(R.layout.matrix_child_layout, null);
-            view.setTag(i);
-            inputGridLayout.addView(view);
+            matrixChild = (EditText)inflater.inflate(R.layout.matrix_child_layout, null);
+            matrixChild.setTag(i);
+            inputGridLayout.addView(matrixChild);
         }
     }
 
@@ -118,14 +118,14 @@ public class MatrixInputFragment extends Fragment {
 
         boolean errorFlag = false;
 
-        int k = 0;
+        int kCount = 0;
 
         for (int i = 0; i < totalNumRows; i++) {
 
             for (int j = 0; j < totalNumCols; j++) {
 
-                String text = ((EditText) inflatedView.findViewWithTag(k)).getText().toString();
-                k++;
+                String text = ((EditText) inflatedView.findViewWithTag(kCount)).getText().toString();
+                kCount++;
 
                 if(!text.equalsIgnoreCase("")){
 
@@ -208,12 +208,23 @@ public class MatrixInputFragment extends Fragment {
         return errorFlag;
     }
 
+    @Override
+    public void onClick(View v) {
+
+        int id = v.getId();
+
+        if(id == R.id.submit_button){
+            validateDetails();
+        }
+    }
+
     private void sendMatrixValues() {
 
         Bundle bundle = new Bundle();
         bundle.putSerializable(LCPAppConstants.INPUT_ARRAY, inputMatrix);
         bundle.putInt(LCPAppConstants.NUMBER_OF_ROWS, totalNumRows);
         bundle.putInt(LCPAppConstants.NUMBER_OF_COLUMNS, totalNumCols);
-        ((LowCostPathActivity) getActivity()).switchFragment(LCPAppConstants.MATRIX_INPUT_FRAGMENT, bundle);
+        FragmentTransactionUtility fragmentUtility = new FragmentTransactionUtility(getActivity());
+        fragmentUtility.switchFragment(LCPAppConstants.SHOW_LCP_FRAGMENT, bundle);
     }
 }

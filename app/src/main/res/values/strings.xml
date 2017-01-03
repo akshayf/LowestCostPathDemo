@@ -13,4 +13,5 @@
     <string name="enter_values">Enter values for </string>
     <string name="enter_valid_values">Please enter valid values</string>
     <string name="path_details">Low Cost Path Details</string>
+    <string name="matrix"> Matrix</string>
 </resources>
