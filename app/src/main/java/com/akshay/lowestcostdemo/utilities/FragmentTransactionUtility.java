@@ -1,6 +1,7 @@
 package com.akshay.lowestcostdemo.utilities;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
@@ -30,39 +31,28 @@ public class FragmentTransactionUtility {
      * @param fragmentTag flag use to specify switching fragment
      * @param bundle bundle object to share data between fragments
      */
-    public void switchFragment(String fragmentTag, Bundle bundle){
+    public void switchFragment(String fragmentTag, Bundle bundle) {
 
         FragmentManager fragmentManager = lcpActivity.getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        if(fragmentTag.equals(MatrixInputFragment.class.getSimpleName())){
+        Fragment fragment = fragmentManager.findFragmentByTag(fragmentTag);
 
-            MatrixInputFragment matrixInputFragment = (MatrixInputFragment)fragmentManager.findFragmentByTag(fragmentTag);
+        if (fragment == null){
+            if (fragmentTag.equals(MatrixInputFragment.class.getSimpleName())) {
+                fragment = new MatrixInputFragment();
+            } else if (fragmentTag.equals(DisplayLCPFragment.class.getSimpleName())) {
+                    fragment = new DisplayLCPFragment();
+            } else {
+                    fragment = new InputDimensionFragment();
+            }
+        }
 
-            if(matrixInputFragment == null)
-                matrixInputFragment = new MatrixInputFragment();
-
-            matrixInputFragment.setArguments(bundle);
-            fragmentTransaction.replace(R.id.fragment_container, matrixInputFragment, fragmentTag);
-
-        }else if(fragmentTag.equals(DisplayLCPFragment.class.getSimpleName())){
-
-            DisplayLCPFragment displayLCPFragment = (DisplayLCPFragment)fragmentManager.findFragmentByTag(fragmentTag);
-
-            if(displayLCPFragment == null)
-                displayLCPFragment = new DisplayLCPFragment();
-
-            displayLCPFragment.setArguments(bundle);
-            fragmentTransaction.replace(R.id.fragment_container, displayLCPFragment, fragmentTag);
-
+        if(fragment instanceof MatrixInputFragment || fragment instanceof DisplayLCPFragment){
+            fragment.setArguments(bundle);
+            fragmentTransaction.replace(R.id.fragment_container, fragment, fragmentTag);
         }else {
-
-            InputDimensionFragment inputDimensionFragment = (InputDimensionFragment)fragmentManager.findFragmentByTag(fragmentTag);
-
-            if(inputDimensionFragment == null)
-                inputDimensionFragment = new InputDimensionFragment();
-
-            fragmentTransaction.add(R.id.fragment_container, inputDimensionFragment, fragmentTag);
+            fragmentTransaction.add(R.id.fragment_container, fragment, fragmentTag);
         }
 
         fragmentTransaction.addToBackStack(null);
