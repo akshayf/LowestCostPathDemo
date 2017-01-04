@@ -138,13 +138,13 @@ public class MatrixInputFragment extends Fragment implements View.OnClickListene
 
             for (int col = 0; col < totalNumCols; col++) {
 
-                String matrixCell = ((EditText) inflatedView.findViewWithTag(cellCount)).getText().toString();
+                String matrixCellText = ((EditText) inflatedView.findViewWithTag(cellCount)).getText().toString();
                 cellCount++;
 
-                if(!matrixCell.equalsIgnoreCase("")){
+                if(!matrixCellText.equalsIgnoreCase("") && matrixCellText.length() <=3){
 
                     try {
-                        inputMatrix[row][col] = Integer.parseInt(matrixCell);
+                        inputMatrix[row][col] = Integer.parseInt(matrixCellText);
 
                     }catch (Exception e){
 
@@ -193,13 +193,19 @@ public class MatrixInputFragment extends Fragment implements View.OnClickListene
 
                         if (st.hasMoreTokens()) {
 
-                            String text = st.nextToken();
+                            String matrixCellText = st.nextToken();
 
-                            try {
-                                inputMatrix[row][col] = Integer.parseInt(text);
-                            } catch (Exception e) {
+                            if(!matrixCellText.equalsIgnoreCase("") && matrixCellText.length() <=3) {
+
+                                try {
+                                    inputMatrix[row][col] = Integer.parseInt(matrixCellText);
+                                } catch (Exception e) {
+                                    errorFlag = true;
+                                    e.printStackTrace();
+                                    break;
+                                }
+                            }else{
                                 errorFlag = true;
-                                e.printStackTrace();
                                 break;
                             }
                         }else{
@@ -243,5 +249,32 @@ public class MatrixInputFragment extends Fragment implements View.OnClickListene
         bundle.putInt(LCPAppConstants.NUMBER_OF_COLUMNS, totalNumCols);
         FragmentTransactionUtility fragmentUtility = new FragmentTransactionUtility(getActivity());
         fragmentUtility.switchFragment(DisplayLCPFragment.class.getSimpleName(), bundle);
+
+        clearInputValues();
+    }
+
+    /**
+     * Clear the matrix or comma separated edit text on switching the fragment
+     */
+    private void clearInputValues(){
+
+        EditText inputEditText = (EditText)inflatedView.findViewById(R.id.input_edit_text);
+
+        if(inputEditText.isShown()){
+
+            inputEditText.setText("");
+
+        }else{
+            int cellCount = 0;
+
+            for (int row = 0; row < totalNumRows; row++) {
+
+                for (int col = 0; col < totalNumCols; col++) {
+
+                    ((EditText) inflatedView.findViewWithTag(cellCount)).setText("");
+                    cellCount++;
+                }
+            }
+        }
     }
 }

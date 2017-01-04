@@ -60,22 +60,25 @@ public class InputDimensionFragment extends Fragment implements View.OnClickList
         String rows = rowEditText.getText().toString();
         String cols = colEditText.getText().toString();
 
-        int numRows = Integer.parseInt(rows);
-        int numCols = Integer.parseInt(cols);
-
-        LCPComponent lcpComponent = DaggerLCPComponent.builder().build();
-        inputValidator = lcpComponent.provideInputDimen();
-
         if(TextUtils.isEmpty(rows)){
             setErrorText(rowEditText, getString(R.string.error_rows));
         }else if(TextUtils.isEmpty(cols)){
             setErrorText(colEditText, getString(R.string.error_cols));
-        }else if(inputValidator.validateEnteredRows(numRows)){
-            setErrorText(rowEditText, getString(R.string.error_rows));
-        }else if(inputValidator.validateEnteredColumns(numCols)){
-            setErrorText(colEditText, getString(R.string.error_cols));
         }else{
-            sendInputDimensions(numRows, numCols);
+
+            int numRows = Integer.parseInt(rows);
+            int numCols = Integer.parseInt(cols);
+
+            LCPComponent lcpComponent = DaggerLCPComponent.builder().build();
+            inputValidator = lcpComponent.provideInputDimen();
+
+            if(inputValidator.validateEnteredRows(numRows)){
+                setErrorText(rowEditText, getString(R.string.error_rows));
+            }else if(inputValidator.validateEnteredColumns(numCols)){
+                setErrorText(colEditText, getString(R.string.error_cols));
+            }else{
+                sendInputDimensions(numRows, numCols);
+            }
         }
     }
 
@@ -106,5 +109,16 @@ public class InputDimensionFragment extends Fragment implements View.OnClickList
         bundle.putInt(LCPAppConstants.NUMBER_OF_COLUMNS, numCols);
         FragmentTransactionUtility fragmentUtility = new FragmentTransactionUtility(getActivity());
         fragmentUtility.switchFragment(MatrixInputFragment.class.getSimpleName(), bundle);
+
+        clearInputDimensions();
+    }
+
+    /**
+     * Clear the input rows and columns on switching the fragment
+     */
+    private void clearInputDimensions(){
+
+        ((EditText)inflatedView.findViewById(R.id.rows_edit_text)).setText("");
+        ((EditText)inflatedView.findViewById(R.id.cols_edit_text)).setText("");
     }
 }

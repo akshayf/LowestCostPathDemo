@@ -42,20 +42,20 @@ public class FragmentTransactionUtility {
             if (fragmentTag.equals(MatrixInputFragment.class.getSimpleName())) {
                 fragment = new MatrixInputFragment();
             } else if (fragmentTag.equals(DisplayLCPFragment.class.getSimpleName())) {
-                    fragment = new DisplayLCPFragment();
+                fragment = new DisplayLCPFragment();
             } else {
-                    fragment = new InputDimensionFragment();
+                fragment = new InputDimensionFragment();
             }
         }
 
-        if(fragment instanceof MatrixInputFragment || fragment instanceof DisplayLCPFragment){
+        if(fragment instanceof MatrixInputFragment || fragment instanceof DisplayLCPFragment) {
             fragment.setArguments(bundle);
             fragmentTransaction.replace(R.id.fragment_container, fragment, fragmentTag);
+            fragmentTransaction.addToBackStack(null);
         }else {
             fragmentTransaction.add(R.id.fragment_container, fragment, fragmentTag);
         }
 
-        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 }
